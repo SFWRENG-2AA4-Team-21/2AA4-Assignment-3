@@ -50,6 +50,11 @@ public class Edge {
 		}
 	}
 
+	//implementing command pattern
+	public void removeRoad() {
+		this.road = null;
+	}
+
 	public Road getRoad(){
 		return road;
 	}

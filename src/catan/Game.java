@@ -25,6 +25,7 @@ public class Game implements Subject {
     private int action;
     private Robber robber;
     private List<Observer> observers;
+    private GameHistory history = new GameHistory();
 
     public Game(int mode){
         this.board = new Board();
@@ -169,8 +170,9 @@ public class Game implements Subject {
                 for (int nodeId : new int[]{0,1,2,3,6,7}) {
                     Node n = board.getNode(nodeId);
                     if (n != null && !n.hasBuilding()) {
-                        n.placeBuilding(new Settlement(p));
-                        p.addVictoryPoints(1);
+                        //implementing command to building
+                        Command cmd = new BuildSettlementCommand(n, p, board);
+                        history.executeCommand(cmd);
                         System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
                         notifyObservers();
                         placed = true;
@@ -183,8 +185,9 @@ public class Game implements Subject {
                 Node n = board.getNode(nodeId);
 
                 if (n != null && !n.hasBuilding()) {
-                    n.placeBuilding(new Settlement(p));
-                    p.addVictoryPoints(1);
+                    //implementing command to building
+                    Command cmd = new BuildSettlementCommand(n, p, board);
+                    history.executeCommand(cmd);
                     System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
                     notifyObservers();
                     placed = true;
@@ -214,9 +217,9 @@ public class Game implements Subject {
             for (int edgeId = 1; edgeId < 5; edgeId++) {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && !e.hasRoad()) {
-                    Road r = new Road(p, e);
-                    e.placeRoad(r);
-                    System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
+                    //implementing command pattern to road
+                    Command cmd = new BuildRoadCommand(e, p, board);
+                    history.executeCommand(cmd);
                     notifyObservers();
                     placed = true;
                     break;
