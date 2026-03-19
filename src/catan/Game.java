@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  *
  */
-public class Game {
+public class Game implements Subject {
 
     private Board board;
     private List<Player> players;
@@ -24,6 +24,7 @@ public class Game {
     private Random rng;
     private int action;
     private Robber robber;
+    private List<Observer> observers;
 
     public Game(int mode){
         this.board = new Board();
@@ -35,7 +36,26 @@ public class Game {
         this.currentRound = 1;
         this.mode= mode;
         this.rng = new Random();
+        this.observers = new ArrayList<>();
     }
+
+    @Override
+    public void attachObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void detachObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(){
+        for (Observer o : observers){
+            o.update(board);
+        }
+    }
+
     public void startGame(){
         if(mode ==1){
             for (int i = 0; i < 4; i++) {
@@ -65,6 +85,7 @@ public class Game {
             board.addEdge(i, new Edge(i, edgePairs[i][0], edgePairs[i][1]));
         }
 
+        attachObserver(new GameStateWriter());
 
         //main simulation loop
         while (currentRound<=maxRounds && !checkWin()){
@@ -151,7 +172,7 @@ public class Game {
                         n.placeBuilding(new Settlement(p));
                         p.addVictoryPoints(1);
                         System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                        GameStateWriter.write(board);
+                        notifyObservers();
                         placed = true;
                         break;
                     }
@@ -165,7 +186,7 @@ public class Game {
                     n.placeBuilding(new Settlement(p));
                     p.addVictoryPoints(1);
                     System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                    GameStateWriter.write(board);
+                    notifyObservers();
                     placed = true;
                 }
                 else {
@@ -196,7 +217,7 @@ public class Game {
                     Road r = new Road(p, e);
                     e.placeRoad(r);
                     System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
-                    GameStateWriter.write(board);
+                    notifyObservers();
                     placed = true;
                     break;
                 }
@@ -204,7 +225,7 @@ public class Game {
 
             if (!placed) {
                 // refund if nowhere to place
-                p.addResources("WOOD", ~1);
+                p.addResources("WOOD", 1);
                 System.out.println("Player " + currentPlayer + " tried Road but no free Edge.");
             }
 
