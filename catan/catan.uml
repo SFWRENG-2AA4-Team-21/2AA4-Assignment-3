@@ -457,6 +457,30 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_x0TWQBYuEfGO5ZNnEr-Ogg" name="LiteralUnlimitedNatural1" value="*"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_MHvd4CNhEfGvdJ1ZtDn0aw" name=" Strategy">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Nl2lMCNiEfGvdJ1ZtDn0aw" name="chooseAction">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_iRVVwCNiEfGvdJ1ZtDn0aw" name="game : Game" visibility="public" effect="create"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_oWhLUCNiEfGvdJ1ZtDn0aw" name="player : Player" visibility="public" effect="create"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cf9-oCNjEfGvdJ1ZtDn0aw" memberEnd="_cgimYCNjEfGvdJ1ZtDn0aw _cgrwUCNjEfGvdJ1ZtDn0aw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cgaDgCNjEfGvdJ1ZtDn0aw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_cgeU8CNjEfGvdJ1ZtDn0aw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <name xsi:nil="true"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cgimYCNjEfGvdJ1ZtDn0aw" name=" strategy" type="_MHvd4CNhEfGvdJ1ZtDn0aw" association="_cf9-oCNjEfGvdJ1ZtDn0aw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cgrwUCNjEfGvdJ1ZtDn0aw" name="game" type="_LsxZQAIcEfGcOLusTzr6rA" association="_cf9-oCNjEfGvdJ1ZtDn0aw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_2H8o8CNkEfGvdJ1ZtDn0aw" name="RuleBasedStrategy">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_gAGLkCNlEfGvdJ1ZtDn0aw" name="rules: List&lt;Rule>" visibility="public"/>
+    <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_HRegQCNmEfGvdJ1ZtDn0aw" client="_2H8o8CNkEfGvdJ1ZtDn0aw" supplier="_MHvd4CNhEfGvdJ1ZtDn0aw" contract="_MHvd4CNhEfGvdJ1ZtDn0aw">
+      <name xsi:nil="true"/>
+    </interfaceRealization>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_IfUB0CNlEfGvdJ1ZtDn0aw" name="chooseAction">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_O5iTQCNlEfGvdJ1ZtDn0aw" name="game: Game" visibility="public" effect="create"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_V-BpsCNlEfGvdJ1ZtDn0aw" name="player: Player" visibility="public" effect="create"/>
+    </ownedOperation>
+  </packagedElement>
   <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Bhs3AAY7EfGuYvaAj0UYiQ">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_BiaosAY7EfGuYvaAj0UYiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
       <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/Codegen/1#/"/>
