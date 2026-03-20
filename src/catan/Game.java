@@ -7,6 +7,7 @@ package catan;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /************************************************************/
 /**
@@ -28,6 +29,7 @@ public class Game implements Subject {
     private GameHistory history = new GameHistory();
     private static final String BRICK = "BRICK";
     private static final String PLAYER = "Player";
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public Game(int mode) {
         this.board = new Board();
@@ -97,8 +99,7 @@ public class Game implements Subject {
                     break;
                 }
             }
-
-            System.out.println("=== End of Round " + currentRound + " ===");
+            logger.info("=== End of Round " + currentRound + " ===");
             for (int i = 0; i < players.size(); i++) {
                 System.out.println(PLAYER +" " + i + " score: " + players.get(i).getScore());
             }
