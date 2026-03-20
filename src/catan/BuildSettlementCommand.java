@@ -2,10 +2,14 @@
 
 package catan;
 
+import java.util.logging.Logger;
+
 public class BuildSettlementCommand implements Command{
     private Node node;
     private Player player;
     private Board board;
+    Logger logger = Logger.getLogger(BuildSettlementCommand.class.getName());
+
 
     public BuildSettlementCommand (Node node, Player player, Board board) {
         this.node = node;
@@ -18,7 +22,7 @@ public class BuildSettlementCommand implements Command{
         if (!node.hasBuilding()) {
             node.placeBuilding(new Settlement(player));
             player.addVictoryPoints(1);
-            System.out.println("Settlement built at Node " + node.getId());
+            logger.info("Settlement built at Node " + node.getId());
         }
 
     }
@@ -27,6 +31,6 @@ public class BuildSettlementCommand implements Command{
     public void undo() {
         node.placeBuilding(null);
         player.addVictoryPoints(-1);
-        System.out.println("Undo settlement at Node " + node.getId());
+        logger.info("Undo settlement at Node " + node.getId());
     }
 }
