@@ -425,6 +425,18 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_V7pIcCODEfGIAK7qjQ8eng" name="update">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_W2IawCODEfGIAK7qjQ8eng" name="board" type="_Bb_moAIUEfGcOLusTzr6rA"/>
     </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ikLYwCSgEfGSncm3chgCKw" name="appendingRoads">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_uadqQCSgEfGSncm3chgCKw" name="sb" visibility="public" effect="create">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_5nBCQCSgEfGSncm3chgCKw" name="board" visibility="public" type="_Bb_moAIUEfGcOLusTzr6rA" effect="create"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_HVFUwCShEfGSncm3chgCKw" name="appendingBuildings">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_bF_TcCShEfGSncm3chgCKw" name="sb" visibility="public" effect="create">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_lO-8sCShEfGSncm3chgCKw" name="board" visibility="public" type="_Bb_moAIUEfGcOLusTzr6rA" effect="create"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_rrVU4BNlEfG805U7Gq15tw" client="_LsxZQAIcEfGcOLusTzr6rA" supplier="_WFw6oBNlEfG805U7Gq15tw">
     <name xsi:nil="true"/>
