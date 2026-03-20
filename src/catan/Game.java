@@ -74,12 +74,8 @@ public class Game implements Subject {
         board.addTile(2, new Tile(2, BRICK, 8));
         board.addTile(3, new Tile(3, "SHEEP", 9));
         robber = new Robber(board, board.getTile(1));
-        /*
-         * for (int i = 1; i < 6; i++) {
-         * board.addNode(i, new Node(i));
-         * board.addEdge(i, new Edge(i, i, i+1));
-         * }
-         */
+
+
         int[] nodeIDs = { 0, 1, 2, 3, 4, 5, 6, 7 };
         int[][] edgePairs = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 6 }, { 6, 7 } };
         for (int id : nodeIDs) {
