@@ -130,7 +130,7 @@ public class Game implements Subject {
             int tileId = rng.nextInt(3) + 1;
             robber.moveTile(tileId);
 
-            logger.info("Robber has blocked resources on tile " + tileId);
+            logger.log(Level.INFO,"Robber has blocked resources on tile ",tileId);
             return;
         }
         // simplified resource distribution:
@@ -139,7 +139,7 @@ public class Game implements Subject {
             Tile t = board.getTile(id);
             if (t != null && t.getDiceVal() == roll && !robber.checkBlock(t)) {
                 p.addResources(t.getResourceType(), 1);
-                logger.info(PLAYER + " " + currentPlayer + " gets 1 " + t.getResourceType());
+                logger.log(Level.INFO, "{0} {1} gets 1 {2}", new Object[]{PLAYER, currentPlayer, t.getResourceType()});
             }
         }
         if (!(p instanceof HumanPlayer)) {
@@ -159,7 +159,7 @@ public class Game implements Subject {
                     p.addResources("WOOD", 1);
                 if (paidBrick)
                     p.addResources(BRICK, 1);
-                logger.info(PLAYER + " " + currentPlayer + " tried to build Settlement but lacked resources.");
+                logger.log(Level.INFO,"{0} {1} tried to build Settlement but lacked resources.", new Object[]{PLAYER, currentPlayer});
                 return;
             }
 
@@ -172,7 +172,7 @@ public class Game implements Subject {
                         // implementing command to building
                         Command cmd = new BuildSettlementCommand(n, p, board);
                         history.executeCommand(cmd);
-                        logger.info(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
+                        logger.log(Level.INFO,"{0} {1} built Settlement at Node {2}", new Object[]{PLAYER, currentPlayer, nodeId});
                         notifyObservers();
                         placed = true;
                         break;
@@ -186,7 +186,7 @@ public class Game implements Subject {
                     // implementing command to building
                     Command cmd = new BuildSettlementCommand(n, p, board);
                     history.executeCommand(cmd);
-                    System.out.println(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
+                    logger.info(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
                     notifyObservers();
                     placed = true;
                 } else {
@@ -198,14 +198,14 @@ public class Game implements Subject {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
                 p.addResources(BRICK, 1);
-                logger.info(PLAYER + " " + currentPlayer + " tried Settlement but no free Node.");
+                logger.log(Level.INFO," tried Settlement but no free Node.", new Object[]{PLAYER, currentPlayer});
             }
 
         } else if (action == 1) {
             // road cost: 1 WOOD
             boolean paidWood = p.useResource("WOOD", 1);
             if (!paidWood) {
-                logger.info(PLAYER + " " + currentPlayer + " tried to build Road but lacked resources.");
+                logger.log(Level.INFO," tried to build Road but lacked resources.", new Object[]{PLAYER, currentPlayer});
                 return;
             }
 
@@ -226,11 +226,11 @@ public class Game implements Subject {
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
-                logger.info(PLAYER + " " + currentPlayer + " tried Road but no free Edge.");
+                logger.log(Level.INFO," tried Road but no free Edge.",new Object[]{PLAYER, currentPlayer});
             }
 
         } else if (action == 2) {
-            logger.info(PLAYER + " " + currentPlayer + " passes.");
+            logger.log(Level.INFO,"{0} {1} passes.", new Object[]{PLAYER, currentPlayer});
         } else {
             logger.log(Level.INFO,"{0} {1} made an invalid action.",new Object[]{PLAYER, currentPlayer});
         }
