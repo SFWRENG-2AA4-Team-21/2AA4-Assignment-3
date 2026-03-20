@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /************************************************************/
 /**
@@ -231,7 +232,7 @@ public class Game implements Subject {
         } else if (action == 2) {
             logger.info(PLAYER + " " + currentPlayer + " passes.");
         } else {
-            logger.info(PLAYER + " " + currentPlayer + " made an invalid action.");
+            logger.log(Level.INFO,"{0} {1} made an invalid action.",new Object[]{PLAYER, currentPlayer});
         }
     }
 
