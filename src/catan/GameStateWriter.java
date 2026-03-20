@@ -3,17 +3,18 @@ package catan;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class GameStateWriter implements Observer {
-    private static final String default_output = "visualize/state.json";
-
+    private static final String DEFAULT_OUTPUT = "visualize/state.json";
+    private static final Logger LOGGER = Logger.getLogger(GameStateWriter.class.getName());
     @Override
     public void update(Board board) {
         write(board);
     }
 
     public static void write(Board board) {
-        write(board, default_output);
+        write(board, DEFAULT_OUTPUT);
     }
 
     public static void write(Board board, String outputPath) {
@@ -22,16 +23,33 @@ public class GameStateWriter implements Observer {
 
         // roads
         sb.append(" \"roads\": [\n");
+        appendingRoads(sb, board);
+        sb.append("\n  ],\n");
+
+        // buildings
+        sb.append("  \"buildings\": [\n");
+        appendingBuildings(sb, board);
+        sb.append("\n  ]\n");
+
+        sb.append("}\n");
+
+        try (FileWriter fileWrite = new FileWriter(outputPath)) {
+            fileWrite.write(sb.toString());
+            LOGGER.info("[GameStateWriter] state.json written to " + outputPath);
+        } catch (IOException e) {
+            LOGGER.severe("[GameStateWriter] failed to write state.json: " + e.getMessage());
+        }
+    
+    }
+    public static void appendingRoads(StringBuilder sb, Board board){
         Collection<Edge> edges = board.getAllEdges();
         boolean firstRoad = true;
         for (Edge edge : edges) {
-            if (!edge.hasRoad())
-                continue;
             Road road = edge.getRoad();
-            // REMOVE WHEN ROAD.GETOWNER IMPLEMENTED
-            if (road.getOwner() == null) {
+
+            if (!edge.hasRoad() || road.getOwner() == null)
                 continue;
-            }
+            
 
             if (!firstRoad) {
                 sb.append(",\n");
@@ -44,23 +62,15 @@ public class GameStateWriter implements Observer {
             sb.append("\"b\": ").append(edge.getNodeB()).append(", ");
             sb.append("\"owner\": \"").append(road.getOwner().getColorString()).append("\"");
             sb.append(" }");
-        }
-        sb.append("\n  ],\n");
-
-        // buildings
-        sb.append("  \"buildings\": [\n");
-
+    }
+    }
+    public static void appendingBuildings(StringBuilder sb, Board board){
         Collection<Node> nodes = board.getAllNodes();
         boolean firstBuilding = true;
         for (Node node : nodes) {
-            if (!node.hasBuilding()) {
-                continue;
-            }
-
             Building building = node.getBuilding();
 
-            // remove one building.getOwner implemented
-            if (building.getOwner() == null) {
+            if (!node.hasBuilding() || building.getOwner() == null) {
                 continue;
             }
 
@@ -76,17 +86,7 @@ public class GameStateWriter implements Observer {
             sb.append("\"owner\": \"").append(building.getOwner().getColorString()).append("\", ");
             sb.append("\"type\": \"").append(type).append("\"");
             sb.append(" }");
-        }
-
-        sb.append("\n  ]\n");
-        sb.append("}\n");
-
-        try (FileWriter fileWrite = new FileWriter(outputPath)) {
-            fileWrite.write(sb.toString());
-            System.out.println("[GameStateWriter] state.json written to " + outputPath);
-        } catch (IOException e) {
-            System.err.println("[GameStateWriter] failed to write state.json: " + e.getMessage());
-        }
+    }
     }
 
 }

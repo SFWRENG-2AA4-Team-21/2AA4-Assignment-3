@@ -1,11 +1,12 @@
 package catan;
+import java.util.logging.logger;
 
 public class Robber {
 
     private Board board;
     private Tile currentTile;
 
-
+    private static final Logger LOGGER = Logger.getLogger(Robber.class.getName());
     public Robber(Board board, Tile startTile){
         this.board = board; 
         this.currentTile = startTile;
@@ -20,9 +21,9 @@ public class Robber {
 
         if (newTile != null) {
             currentTile = newTile;
-            logger.info("Robber moved to tile " + tileId);
+            LOGGER.info("Robber moved to tile " + tileId);
         } else {
-            logger.info("Invalid tile ID.");
+            LOGGER.info("Invalid tile ID.");
         }
     }
 
