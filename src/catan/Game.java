@@ -26,6 +26,7 @@ public class Game implements Subject {
     private Robber robber;
     private List<Observer> observers;
     private GameHistory history = new GameHistory();
+    private static final String BRICK = "BRICK";
 
     public Game(int mode) {
         this.board = new Board();
@@ -69,7 +70,7 @@ public class Game implements Subject {
             }
         }
         board.addTile(1, new Tile(1, "WOOD", 6));
-        board.addTile(2, new Tile(2, "BRICK", 8));
+        board.addTile(2, new Tile(2, BRICK, 8));
         board.addTile(3, new Tile(3, "SHEEP", 9));
         robber = new Robber(board, board.getTile(1));
         /*
@@ -151,14 +152,14 @@ public class Game implements Subject {
 
         if (action == 0) {
             boolean paidWood = p.useResource("WOOD", 1);
-            boolean paidBrick = p.useResource("BRICK", 1);
+            boolean paidBrick = p.useResource(BRICK, 1);
 
             if (!paidWood || !paidBrick) {
                 // refund any partial payment
                 if (paidWood)
                     p.addResources("WOOD", 1);
                 if (paidBrick)
-                    p.addResources("BRICK", 1);
+                    p.addResources(BRICK, 1);
                 System.out.println("Player " + currentPlayer + " tried to build Settlement but lacked resources.");
                 return;
             }
@@ -197,7 +198,7 @@ public class Game implements Subject {
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
-                p.addResources("BRICK", 1);
+                p.addResources(BRICK, 1);
                 System.out.println("Player " + currentPlayer + " tried Settlement but no free Node.");
             }
 
@@ -308,7 +309,7 @@ public class Game implements Subject {
 
     private boolean canBuildSettlement(Player p) {
         int wood = p.resources.getOrDefault("WOOD", 0);
-        int brick = p.resources.getOrDefault("BRICK", 0);
+        int brick = p.resources.getOrDefault(BRICK, 0);
         if (wood < 1 || brick < 1) {
             return false;
         }
