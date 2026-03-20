@@ -27,7 +27,7 @@ public class Game implements Subject {
     private List<Observer> observers;
     private GameHistory history = new GameHistory();
 
-    public Game(int mode){
+    public Game(int mode) {
         this.board = new Board();
         this.players = new ArrayList<>();
         this.currentPlayer = 0;
@@ -35,7 +35,7 @@ public class Game implements Subject {
 
         this.maxRounds = 30;
         this.currentRound = 1;
-        this.mode= mode;
+        this.mode = mode;
         this.rng = new Random();
         this.observers = new ArrayList<>();
     }
@@ -51,18 +51,18 @@ public class Game implements Subject {
     }
 
     @Override
-    public void notifyObservers(){
-        for (Observer o : observers){
+    public void notifyObservers() {
+        for (Observer o : observers) {
             o.update(board);
         }
     }
 
-    public void startGame(){
-        if(mode ==1){
+    public void startGame() {
+        if (mode == 1) {
             for (int i = 0; i < 4; i++) {
                 players.add(new Player(i));
             }
-        } else if (mode ==2) {
+        } else if (mode == 2) {
             players.add(new HumanPlayer(1));
             for (int i = 2; i < 3; i++) {
                 players.add(new Player(i));
@@ -73,23 +73,24 @@ public class Game implements Subject {
         board.addTile(3, new Tile(3, "SHEEP", 9));
         robber = new Robber(board, board.getTile(1));
         /*
-        for (int i = 1; i < 6; i++) {
-            board.addNode(i, new Node(i));
-          board.addEdge(i, new Edge(i, i, i+1));
-        }*/
-        int[] nodeIDs = {0,1,2,3,4,5,6,7};
-        int[][] edgePairs = {{0,1}, {1,2},{2,3},{3,6}, {6,7}};
+         * for (int i = 1; i < 6; i++) {
+         * board.addNode(i, new Node(i));
+         * board.addEdge(i, new Edge(i, i, i+1));
+         * }
+         */
+        int[] nodeIDs = { 0, 1, 2, 3, 4, 5, 6, 7 };
+        int[][] edgePairs = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 6 }, { 6, 7 } };
         for (int id : nodeIDs) {
             board.addNode(id, new Node(id));
         }
-        for(int i=0; i<edgePairs.length; i++){
+        for (int i = 0; i < edgePairs.length; i++) {
             board.addEdge(i, new Edge(i, edgePairs[i][0], edgePairs[i][1]));
         }
 
         attachObserver(new GameStateWriter());
 
-        //main simulation loop
-        while (currentRound<=maxRounds && !checkWin()){
+        // main simulation loop
+        while (currentRound <= maxRounds && !checkWin()) {
 
             for (int i = 0; i < players.size(); i++) {
                 currentPlayer = i;
@@ -100,7 +101,7 @@ public class Game implements Subject {
             }
 
             System.out.println("=== End of Round " + currentRound + " ===");
-            for (int i=0; i<players.size(); i++) {
+            for (int i = 0; i < players.size(); i++) {
                 System.out.println("Player " + i + " score: " + players.get(i).getScore());
             }
             System.out.println();
@@ -115,13 +116,11 @@ public class Game implements Subject {
 
     }
 
-
     /**
      *
      */
     public void nextTurn() {
         Player p = players.get(currentPlayer);
-
 
         int roll = dice.roll();
         System.out.println("[Round " + currentRound + "] Player " + currentPlayer + " rolled " + roll);
@@ -143,34 +142,34 @@ public class Game implements Subject {
                 System.out.println("Player " + currentPlayer + " gets 1 " + t.getResourceType());
             }
         }
-        if(!(p instanceof HumanPlayer)){
-            action = rng.nextInt(3);
-        }
-        else{
+        if (!(p instanceof HumanPlayer)) {
+            action = chooseBestAction(p);
+        } else {
 
             action = ((HumanPlayer) p).askForaction();
         }
 
-
-        if (action == 0){
+        if (action == 0) {
             boolean paidWood = p.useResource("WOOD", 1);
             boolean paidBrick = p.useResource("BRICK", 1);
 
             if (!paidWood || !paidBrick) {
-                //refund any partial payment
-                if (paidWood) p.addResources("WOOD", 1);
-                if (paidBrick) p.addResources("BRICK", 1);
+                // refund any partial payment
+                if (paidWood)
+                    p.addResources("WOOD", 1);
+                if (paidBrick)
+                    p.addResources("BRICK", 1);
                 System.out.println("Player " + currentPlayer + " tried to build Settlement but lacked resources.");
                 return;
             }
 
             // find first free node
             boolean placed = false;
-            if(!(p instanceof HumanPlayer)){
-                for (int nodeId : new int[]{0,1,2,3,6,7}) {
+            if (!(p instanceof HumanPlayer)) {
+                for (int nodeId : new int[] { 0, 1, 2, 3, 6, 7 }) {
                     Node n = board.getNode(nodeId);
                     if (n != null && !n.hasBuilding()) {
-                        //implementing command to building
+                        // implementing command to building
                         Command cmd = new BuildSettlementCommand(n, p, board);
                         history.executeCommand(cmd);
                         System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
@@ -179,20 +178,18 @@ public class Game implements Subject {
                         break;
                     }
                 }
-            }
-            else{
-                int nodeId = ((HumanPlayer) p).askForLoc();   // ask human
+            } else {
+                int nodeId = ((HumanPlayer) p).askForLoc(); // ask human
                 Node n = board.getNode(nodeId);
 
                 if (n != null && !n.hasBuilding()) {
-                    //implementing command to building
+                    // implementing command to building
                     Command cmd = new BuildSettlementCommand(n, p, board);
                     history.executeCommand(cmd);
                     System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
                     notifyObservers();
                     placed = true;
-                }
-                else {
+                } else {
                     System.out.println("Invalid node or already occupied.");
                 }
             }
@@ -217,7 +214,7 @@ public class Game implements Subject {
             for (int edgeId = 1; edgeId < 5; edgeId++) {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && !e.hasRoad()) {
-                    //implementing command pattern to road
+                    // implementing command pattern to road
                     Command cmd = new BuildRoadCommand(e, p, board);
                     history.executeCommand(cmd);
                     notifyObservers();
@@ -232,9 +229,9 @@ public class Game implements Subject {
                 System.out.println("Player " + currentPlayer + " tried Road but no free Edge.");
             }
 
-        } else if(action == 2){
+        } else if (action == 2) {
             System.out.println("Player " + currentPlayer + " passes.");
-        }else{
+        } else {
             System.out.println("Player " + currentPlayer + " made an invalid action.");
         }
     }
@@ -243,10 +240,97 @@ public class Game implements Subject {
      *
      * @return
      */
-    public boolean checkWin(){
+    public boolean checkWin() {
 
         for (Player p : players) {
-            if (p.getScore()>=10) {
+            if (p.getScore() >= 10) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int chooseBestAction(Player p) {
+        List<Integer> bestActions = new ArrayList<>();
+        double maxScore = -1.0;
+
+        // Action 0: Build Settlement
+        // Value: Earning a VP is 1.0. This is the highest possible value.
+        // Even if cards remaining drop below 5, we prefer the highest applicable value
+        // which is 1.0.
+        if (canBuildSettlement(p)) {
+            double score = 1.0;
+            if (score > maxScore) {
+                maxScore = score;
+                bestActions.clear();
+                bestActions.add(0);
+            } else if (score == maxScore) {
+                bestActions.add(0);
+            }
+        }
+
+        // Action 1: Build Road
+        // Value: Building without a VP is 0.8.
+        // It qualifies for 0.5 (spending cards leaving < 5 remaining) but we take the
+        // highest applicable value per requirement, which is 0.8.
+        if (canBuildRoad(p)) {
+            double score = 0.8;
+
+            // Explicitly show logic for R3.2 < 5 cards rule:
+            int remainingCards = p.getTotalResourceCards() - 1; // 1 wood spent
+            double penaltyScore = (remainingCards < 5) ? 0.5 : 0.0;
+            score = Math.max(score, penaltyScore);
+
+            if (score > maxScore) {
+                maxScore = score;
+                bestActions.clear();
+                bestActions.add(1);
+            } else if (score == maxScore) {
+                bestActions.add(1);
+            }
+        }
+
+        // Action 2: Pass
+        // Passing is always feasible and doesn't spend resources or build anything.
+        // Score is 0.0.
+        double passScore = 0.0;
+        if (passScore > maxScore) {
+            maxScore = passScore;
+            bestActions.clear();
+            bestActions.add(2);
+        } else if (passScore == maxScore) {
+            bestActions.add(2);
+        }
+
+        // Randomly choose among tied actions
+        return bestActions.get(rng.nextInt(bestActions.size()));
+    }
+
+    private boolean canBuildSettlement(Player p) {
+        int wood = p.resources.getOrDefault("WOOD", 0);
+        int brick = p.resources.getOrDefault("BRICK", 0);
+        if (wood < 1 || brick < 1) {
+            return false;
+        }
+
+        for (int nodeId : new int[] { 0, 1, 2, 3, 6, 7 }) {
+            Node n = board.getNode(nodeId);
+            if (n != null && !n.hasBuilding()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean canBuildRoad(Player p) {
+        int wood = p.resources.getOrDefault("WOOD", 0);
+        if (wood < 1) {
+            return false;
+        }
+
+        for (int edgeId = 1; edgeId < 5; edgeId++) {
+            Edge e = board.getEdge(edgeId);
+            if (e != null && !e.hasRoad()) {
                 return true;
             }
         }

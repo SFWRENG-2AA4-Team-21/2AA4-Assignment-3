@@ -72,4 +72,12 @@ public class Player {
 	public void addVictoryPoints(int points){
 		victoryPoints+=points; 
 	}
+	
+	public int getTotalResourceCards() {
+		int total = 0;
+		for (int count : resources.values()) {
+			total += count;
+		}
+		return total;
+	}
 }
