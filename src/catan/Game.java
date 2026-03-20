@@ -101,16 +101,16 @@ public class Game implements Subject {
             }
             logger.info("=== End of Round " + currentRound + " ===");
             for (int i = 0; i < players.size(); i++) {
-                System.out.println(PLAYER +" " + i + " score: " + players.get(i).getScore());
+                logger.info(PLAYER +" " + i + " score: " + players.get(i).getScore());
             }
             System.out.println();
 
             currentRound++;
         }
 
-        System.out.println("=== GAME OVER ===");
+        logger.info("=== GAME OVER ===");
         for (int i = 0; i < players.size(); i++) {
-            System.out.println(PLAYER +" " + i + " final score: " + players.get(i).getScore());
+            logger.info(PLAYER +" " + i + " final score: " + players.get(i).getScore());
         }
 
     }
