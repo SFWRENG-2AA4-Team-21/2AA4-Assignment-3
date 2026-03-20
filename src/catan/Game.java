@@ -122,14 +122,14 @@ public class Game implements Subject {
         Player p = players.get(currentPlayer);
 
         int roll = dice.roll();
-        System.out.println("[Round " + currentRound + "] " + PLAYER +" " + currentPlayer + " rolled " + roll);
+        logger.info("[Round " + currentRound + "] " + PLAYER +" " + currentPlayer + " rolled " + roll);
 
         if (roll == 7) {
 
             int tileId = rng.nextInt(3) + 1;
             robber.moveTile(tileId);
 
-            System.out.println("Robber has blocked resources on tile " + tileId);
+            logger.info("Robber has blocked resources on tile " + tileId);
             return;
         }
         // simplified resource distribution:
@@ -138,7 +138,7 @@ public class Game implements Subject {
             Tile t = board.getTile(id);
             if (t != null && t.getDiceVal() == roll && !robber.checkBlock(t)) {
                 p.addResources(t.getResourceType(), 1);
-                System.out.println(PLAYER + " " + currentPlayer + " gets 1 " + t.getResourceType());
+                logger.info(PLAYER + " " + currentPlayer + " gets 1 " + t.getResourceType());
             }
         }
         if (!(p instanceof HumanPlayer)) {
@@ -158,7 +158,7 @@ public class Game implements Subject {
                     p.addResources("WOOD", 1);
                 if (paidBrick)
                     p.addResources(BRICK, 1);
-                System.out.println(PLAYER + " " + currentPlayer + " tried to build Settlement but lacked resources.");
+                logger.info(PLAYER + " " + currentPlayer + " tried to build Settlement but lacked resources.");
                 return;
             }
 
@@ -171,7 +171,7 @@ public class Game implements Subject {
                         // implementing command to building
                         Command cmd = new BuildSettlementCommand(n, p, board);
                         history.executeCommand(cmd);
-                        System.out.println(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
+                        logger.info(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
                         notifyObservers();
                         placed = true;
                         break;
@@ -189,7 +189,7 @@ public class Game implements Subject {
                     notifyObservers();
                     placed = true;
                 } else {
-                    System.out.println("Invalid node or already occupied.");
+                    logger.info("Invalid node or already occupied.");
                 }
             }
 
@@ -197,14 +197,14 @@ public class Game implements Subject {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
                 p.addResources(BRICK, 1);
-                System.out.println(PLAYER + " " + currentPlayer + " tried Settlement but no free Node.");
+                logger.info(PLAYER + " " + currentPlayer + " tried Settlement but no free Node.");
             }
 
         } else if (action == 1) {
             // road cost: 1 WOOD
             boolean paidWood = p.useResource("WOOD", 1);
             if (!paidWood) {
-                System.out.println(PLAYER + " " + currentPlayer + " tried to build Road but lacked resources.");
+                logger.info(PLAYER + " " + currentPlayer + " tried to build Road but lacked resources.");
                 return;
             }
 
@@ -225,13 +225,13 @@ public class Game implements Subject {
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
-                System.out.println(PLAYER + " " + currentPlayer + " tried Road but no free Edge.");
+                logger.info(PLAYER + " " + currentPlayer + " tried Road but no free Edge.");
             }
 
         } else if (action == 2) {
-            System.out.println(PLAYER + " " + currentPlayer + " passes.");
+            logger.info(PLAYER + " " + currentPlayer + " passes.");
         } else {
-            System.out.println(PLAYER + " " + currentPlayer + " made an invalid action.");
+            logger.info(PLAYER + " " + currentPlayer + " made an invalid action.");
         }
     }
 
