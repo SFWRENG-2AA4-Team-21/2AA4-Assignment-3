@@ -17,26 +17,25 @@ public class HumanPlayer extends Player {
         System.out.println("YOUR RESOURCES ARE");
         for (String resource : resources.keySet()) {
             int amount = resources.get(resource);
-            System.out.println(resource + ": " + amount);
+            logger.info(resource + ": " + amount);
         }
     }
     public int askForaction(){
-        System.out.println("Choose action:");
+        logger.info("Choose action:");
 
-        System.out.println("Build Settlement");
-        System.out.println("Build Road");
-        System.out.println("Pass");
+        logger.info("Build Settlement");
+        logger.info("Build Road");
+        logger.info("Pass");
 
 
         String action = scanner.nextLine();
-        int read_Action = r.parse(action);
+        int readAction = r.parse(action);
 
-        return read_Action;
+        return readAction;
     }
     public int askForLoc(){
-        System.out.println("Choose a node (1-6): ");
-        int nodeId = scanner.nextInt();
-        return nodeId;
+        logger.info("Choose a node (1-6): ");
+        return scanner.nextInt();
     }
 }
 
