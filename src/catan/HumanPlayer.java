@@ -14,9 +14,16 @@ public class HumanPlayer extends Player {
     }
 
     public void showResources(){
+<<<<<<< Updated upstream
         System.out.println("YOUR RESOURCES ARE");
         for (String resource : resources.keySet()) {
             int amount = resources.get(resource);
+=======
+        logger.info("YOUR RESOURCES ARE");
+        for (Map.Entry<String, Integer> entry : resources.entrySet()) {
+            String resource = entry.getKey();
+            int amount = entry.getValue(resource);
+>>>>>>> Stashed changes
             logger.info(resource + ": " + amount);
         }
     }
