@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
         for (Map.Entry<String, Integer> entry : resources.entrySet()) {
             String resource = entry.getKey();
             int amount = entry.getValue();
-            LOGGER.info(String.format("%s: %d", resource, amount));
+            LOGGER.info(() -> String.format("%s: %d", resource, amount));
         }
     }
     public int askForaction(){
