@@ -27,6 +27,7 @@ public class Game implements Subject {
     private List<Observer> observers;
     private GameHistory history = new GameHistory();
     private static final String BRICK = "BRICK";
+    private static final String PLAYER = "Player";
 
     public Game(int mode) {
         this.board = new Board();
@@ -103,7 +104,7 @@ public class Game implements Subject {
 
             System.out.println("=== End of Round " + currentRound + " ===");
             for (int i = 0; i < players.size(); i++) {
-                System.out.println("Player " + i + " score: " + players.get(i).getScore());
+                System.out.println(PLAYER +" " + i + " score: " + players.get(i).getScore());
             }
             System.out.println();
 
@@ -112,7 +113,7 @@ public class Game implements Subject {
 
         System.out.println("=== GAME OVER ===");
         for (int i = 0; i < players.size(); i++) {
-            System.out.println("Player " + i + " final score: " + players.get(i).getScore());
+            System.out.println(PLAYER +" " + i + " final score: " + players.get(i).getScore());
         }
 
     }
@@ -124,7 +125,7 @@ public class Game implements Subject {
         Player p = players.get(currentPlayer);
 
         int roll = dice.roll();
-        System.out.println("[Round " + currentRound + "] Player " + currentPlayer + " rolled " + roll);
+        System.out.println("[Round " + currentRound + "] " + PLAYER +" " + currentPlayer + " rolled " + roll);
 
         if (roll == 7) {
 
@@ -140,7 +141,7 @@ public class Game implements Subject {
             Tile t = board.getTile(id);
             if (t != null && t.getDiceVal() == roll && !robber.checkBlock(t)) {
                 p.addResources(t.getResourceType(), 1);
-                System.out.println("Player " + currentPlayer + " gets 1 " + t.getResourceType());
+                System.out.println(PLAYER + " " + currentPlayer + " gets 1 " + t.getResourceType());
             }
         }
         if (!(p instanceof HumanPlayer)) {
@@ -160,7 +161,7 @@ public class Game implements Subject {
                     p.addResources("WOOD", 1);
                 if (paidBrick)
                     p.addResources(BRICK, 1);
-                System.out.println("Player " + currentPlayer + " tried to build Settlement but lacked resources.");
+                System.out.println(PLAYER + " " + currentPlayer + " tried to build Settlement but lacked resources.");
                 return;
             }
 
@@ -173,7 +174,7 @@ public class Game implements Subject {
                         // implementing command to building
                         Command cmd = new BuildSettlementCommand(n, p, board);
                         history.executeCommand(cmd);
-                        System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                        System.out.println(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
                         notifyObservers();
                         placed = true;
                         break;
@@ -187,7 +188,7 @@ public class Game implements Subject {
                     // implementing command to building
                     Command cmd = new BuildSettlementCommand(n, p, board);
                     history.executeCommand(cmd);
-                    System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                    System.out.println(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
                     notifyObservers();
                     placed = true;
                 } else {
@@ -199,14 +200,14 @@ public class Game implements Subject {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
                 p.addResources(BRICK, 1);
-                System.out.println("Player " + currentPlayer + " tried Settlement but no free Node.");
+                System.out.println(PLAYER + " " + currentPlayer + " tried Settlement but no free Node.");
             }
 
         } else if (action == 1) {
             // road cost: 1 WOOD
             boolean paidWood = p.useResource("WOOD", 1);
             if (!paidWood) {
-                System.out.println("Player " + currentPlayer + " tried to build Road but lacked resources.");
+                System.out.println(PLAYER + " " + currentPlayer + " tried to build Road but lacked resources.");
                 return;
             }
 
@@ -227,13 +228,13 @@ public class Game implements Subject {
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
-                System.out.println("Player " + currentPlayer + " tried Road but no free Edge.");
+                System.out.println(PLAYER + " " + currentPlayer + " tried Road but no free Edge.");
             }
 
         } else if (action == 2) {
-            System.out.println("Player " + currentPlayer + " passes.");
+            System.out.println(PLAYER + " " + currentPlayer + " passes.");
         } else {
-            System.out.println("Player " + currentPlayer + " made an invalid action.");
+            System.out.println(PLAYER + " " + currentPlayer + " made an invalid action.");
         }
     }
 
