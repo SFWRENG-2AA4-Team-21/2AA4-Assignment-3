@@ -40,7 +40,9 @@ public class Player {
 	 * @param amount 
 	 */
 	public void addResources(String type,int amount) {
-		if (amount<=0) return;
+		if (amount<=0){ 
+			return;
+		}
         resources.put(type, resources.getOrDefault(type,0)+amount);
 	}
 

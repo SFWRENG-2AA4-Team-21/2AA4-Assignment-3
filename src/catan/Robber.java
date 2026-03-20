@@ -20,9 +20,9 @@ public class Robber {
 
         if (newTile != null) {
             currentTile = newTile;
-            System.out.println("Robber moved to tile " + tileId);
+            logger.info("Robber moved to tile " + tileId);
         } else {
-            System.out.println("Invalid tile ID.");
+            logger.info("Invalid tile ID.");
         }
     }
 
