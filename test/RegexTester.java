@@ -1,3 +1,5 @@
+package test;
+
 public class RegexTester {
     public String parse(String str){
         if(str.matches("^Roll$")){

@@ -1,4 +1,4 @@
-
+package test;
 import catan.Player; 
 import static org.junit.jupiter.api.Assertions.*;
 

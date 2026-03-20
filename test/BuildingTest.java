@@ -1,4 +1,4 @@
-
+package test;
 import catan.Building;
 import catan.Player;
 import org.junit.jupiter.api.BeforeEach;

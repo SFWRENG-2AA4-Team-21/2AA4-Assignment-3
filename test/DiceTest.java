@@ -1,3 +1,4 @@
+package test;
 import catan.Dice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

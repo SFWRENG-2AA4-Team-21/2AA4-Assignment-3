@@ -1,5 +1,5 @@
 
-
+package test;
 import catan.Board;
 import catan.Edge;
 import catan.Node;
