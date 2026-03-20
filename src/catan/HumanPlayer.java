@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
         for (Map.Entry<String, Integer> entry : resources.entrySet()) {
             String resource = entry.getKey();
             int amount = entry.getValue();
-            LOGGER.info(resource + ": " + amount);
+            LOGGER.info(String.format("%s: %d", resource, amount));
         }
     }
     public int askForaction(){
@@ -31,9 +31,8 @@ public class HumanPlayer extends Player {
 
 
         String action = scanner.nextLine();
-        int readAction = r.parse(action);
+        return r.parse(action);
 
-        return readAction;
     }
     public int askForLoc(){
         LOGGER.info("Choose a node (1-6): ");
