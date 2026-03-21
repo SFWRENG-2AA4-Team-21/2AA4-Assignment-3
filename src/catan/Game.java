@@ -106,9 +106,7 @@ public class Game implements Subject {
                 }
             }
             logger.log(Level.INFO, "=== End of Round {0} ===", currentRound);
-            for (int i = 0; i < players.size(); i++) {
-                logger.log(Level.INFO, "{0} {1} score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
-            }
+            printPlayerScore(players);
             logger.info("----------------------------------------------");
 
             currentRound++;
@@ -342,10 +340,11 @@ public class Game implements Subject {
     }
 
     private void printPlayerScore(List<Player> players){
-        for (Player p : players) {
-            int i = p.getId();
-            logger.log(Level.INFO,"{0} {1} final score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
+        for (int i = 0; i < players.size(); i++) {
+            logger.log(Level.INFO,"{0} {1} score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
         }
     }
+
+
 
 }
