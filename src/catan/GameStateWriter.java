@@ -35,7 +35,7 @@ public class GameStateWriter implements Observer {
 
         try (FileWriter fileWrite = new FileWriter(outputPath)) {
             fileWrite.write(sb.toString());
-            LOGGER.info(String.format(() -> "[GameStateWriter] state.json written to %s", outputPath));
+            LOGGER.info(String.format( "[GameStateWriter] state.json written to %s", outputPath));
         } catch (IOException e) {
             LOGGER.severe(String.format("[GameStateWriter] failed to write state.json: %s", e.getMessage()));
         }

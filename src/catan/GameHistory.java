@@ -6,8 +6,8 @@ import java.util.ArrayDeque;
 
 public class GameHistory {
 
-    private Stack<Command> undoStack = new ArrayDeque<>();
-    private Stack<Command> redoStack = new ArrayDeque<>();
+    private Deque<Command> undoStack = new ArrayDeque<>();
+    private Deque<Command> redoStack = new ArrayDeque<>();
 
     public void executeCommand(Command command) {
         command.execute();
