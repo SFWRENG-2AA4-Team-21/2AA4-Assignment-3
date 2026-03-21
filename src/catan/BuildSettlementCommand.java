@@ -7,8 +7,7 @@ import java.util.logging.Logger;
 public class BuildSettlementCommand implements Command{
     private Node node;
     private Player player;
-    @SuppressWarnings("unused")
-    private Board board;
+    //private Board board;
 
     Logger logger = Logger.getLogger(BuildSettlementCommand.class.getName());
 
@@ -16,7 +15,7 @@ public class BuildSettlementCommand implements Command{
     public BuildSettlementCommand (Node node, Player player, Board board) {
         this.node = node;
         this.player = player;
-        this.board = board;
+        //this.board = board;
     }
 
     @Override
