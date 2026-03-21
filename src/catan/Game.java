@@ -120,6 +120,7 @@ public class Game implements Subject {
     /**
      *
      */
+    @SuppressWarnings("squid:S3776")
     public void nextTurn() {
         Player p = players.get(currentPlayer);
 
@@ -294,7 +295,6 @@ public class Game implements Subject {
         // Action 2: Pass
         // Passing is always feasible and doesn't spend resources or build anything.
         // Score is 0.0.
-        @SuppressWarnings("squid:S1854")
         double passScore = 0.0;
         if (passScore > maxScore) {
             maxScore = passScore;
