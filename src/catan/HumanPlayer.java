@@ -15,7 +15,6 @@ public class HumanPlayer extends Player {
     }
 
     public void showResources(){
-<<<<<<< Updated upstream
 
         LOGGER.info("YOUR RESOURCES ARE");
         for (Map.Entry<String, Integer> entry : resources.entrySet()) {
@@ -29,21 +28,6 @@ public class HumanPlayer extends Player {
         LOGGER.info("Build Settlement");
         LOGGER.info("Build Road");
         LOGGER.info("Pass");
-=======
-        logger.info("YOUR RESOURCES ARE");
-        for (Map.Entry<String, Integer> entry : resources.entrySet()) {
-            String resource = entry.getKey();
-            int amount = entry.getValue(resource);
-            logger.info(resource + ": " + amount);
-        }
-    }
-    public int askForaction(){
-        logger.info("Choose action:");
-
-        logger.info("Build Settlement");
-        logger.info("Build Road");
-        logger.info("Pass");
->>>>>>> Stashed changes
 
 
         String action = scanner.nextLine();
