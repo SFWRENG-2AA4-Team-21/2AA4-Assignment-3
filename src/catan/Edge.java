@@ -1,5 +1,6 @@
 
 package catan;
+import java.util.logging.Logger;
 
 /************************************************************/
 /**
@@ -13,6 +14,7 @@ public class Edge {
 	private Road road;
 	private int nodeA;
 	private int nodeB;
+	Logger logger = Logger.getLogger(Edge.class.getName());
 
 
 	public Edge(int id, int nodeA, int nodeB){
@@ -46,7 +48,7 @@ public class Edge {
 			this.road = r;
 		}
 		else{
-			System.out.println("Edge already has a road.");
+			logger.info("Edge already has a road.");
 		}
 	}
 

@@ -104,7 +104,7 @@ public class Game implements Subject {
             for (int i = 0; i < players.size(); i++) {
                 logger.log(Level.INFO, "{0} {1} score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
             }
-            System.out.println();
+            logger.info("----------------------------------------------");
 
             currentRound++;
         }
