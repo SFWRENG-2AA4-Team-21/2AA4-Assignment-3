@@ -100,9 +100,9 @@ public class Game implements Subject {
                     break;
                 }
             }
-            logger.info("=== End of Round " + currentRound + " ===");
+            logger.log(Level.INFO, "=== End of Round {0} ===", currentRound);
             for (int i = 0; i < players.size(); i++) {
-                logger.info(PLAYER +" " + i + " score: " + players.get(i).getScore());
+                logger.log(Level.INFO, "{0} {1} score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
             }
             System.out.println();
 
@@ -111,7 +111,7 @@ public class Game implements Subject {
 
         logger.info("=== GAME OVER ===");
         for (int i = 0; i < players.size(); i++) {
-            logger.info(PLAYER +" " + i + " final score: " + players.get(i).getScore());
+            logger.log(Level.INFO,"{0} {1} final score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
         }
 
     }
@@ -123,14 +123,14 @@ public class Game implements Subject {
         Player p = players.get(currentPlayer);
 
         int roll = dice.roll();
-        logger.info("[Round " + currentRound + "] " + PLAYER +" " + currentPlayer + " rolled " + roll);
+        logger.log(Level.INFO,"[Round {0}] {1} {2} rolled {3}", new Object[]{currentRound, PLAYER, currentPlayer, roll});
 
         if (roll == 7) {
 
             int tileId = rng.nextInt(3) + 1;
             robber.moveTile(tileId);
 
-            logger.log(Level.INFO,"Robber has blocked resources on tile ",tileId);
+            logger.log(Level.INFO,"Robber has blocked resources on tile {0}",tileId);
             return;
         }
         // simplified resource distribution:
@@ -186,7 +186,7 @@ public class Game implements Subject {
                     // implementing command to building
                     Command cmd = new BuildSettlementCommand(n, p, board);
                     history.executeCommand(cmd);
-                    logger.info(PLAYER + " " + currentPlayer + " built Settlement at Node " + nodeId);
+                    logger.log(Level.INFO,"{0} {1} built Settlement at Node {2}",new Object[]{PLAYER, currentPlayer, nodeId});
                     notifyObservers();
                     placed = true;
                 } else {
@@ -198,14 +198,14 @@ public class Game implements Subject {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
                 p.addResources(BRICK, 1);
-                logger.log(Level.INFO," tried Settlement but no free Node.", new Object[]{PLAYER, currentPlayer});
+                logger.log(Level.INFO,"{0} {1} tried Settlement but no free Node.", new Object[]{PLAYER, currentPlayer});
             }
 
         } else if (action == 1) {
             // road cost: 1 WOOD
             boolean paidWood = p.useResource("WOOD", 1);
             if (!paidWood) {
-                logger.log(Level.INFO," tried to build Road but lacked resources.", new Object[]{PLAYER, currentPlayer});
+                logger.log(Level.INFO,"{0} {1} tried to build Road but lacked resources.", new Object[]{PLAYER, currentPlayer});
                 return;
             }
 
@@ -226,7 +226,8 @@ public class Game implements Subject {
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
-                logger.log(Level.INFO," tried Road but no free Edge.",new Object[]{PLAYER, currentPlayer});
+                logger.log(Level.INFO,"{0} {1} tried Road but no free Edge.",new Object[]{PLAYER, currentPlayer});
+
             }
 
         } else if (action == 2) {
