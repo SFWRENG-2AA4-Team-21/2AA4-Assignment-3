@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 public class BuildSettlementCommand implements Command{
     private Node node;
     private Player player;
+    @SuppressWarnings("unused")
     private Board board;
+
     Logger logger = Logger.getLogger(BuildSettlementCommand.class.getName());
 
 
