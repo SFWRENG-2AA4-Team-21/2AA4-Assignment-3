@@ -75,6 +75,8 @@ public class Game implements Subject {
                     players.add(new Player(i));
                 }
                 break;
+            default:
+                break;
         }
         board.addTile(1, new Tile(1, "WOOD", 6));
         board.addTile(2, new Tile(2, BRICK, 8));
@@ -113,7 +115,8 @@ public class Game implements Subject {
         }
 
         logger.info("=== GAME OVER ===");
-        for (int i = 0; i < players.size(); i++) {
+        for (Player p : players) {
+            int i = p.getId();
             logger.log(Level.INFO,"{0} {1} final score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
         }
 
