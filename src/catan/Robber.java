@@ -1,5 +1,5 @@
 package catan;
-import java.util.logging.logger;
+import java.util.logging.Logger;
 
 public class Robber {
 
