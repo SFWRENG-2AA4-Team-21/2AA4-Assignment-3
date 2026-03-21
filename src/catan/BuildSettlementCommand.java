@@ -7,15 +7,13 @@ import java.util.logging.Logger;
 public class BuildSettlementCommand implements Command{
     private Node node;
     private Player player;
-    //private Board board;
 
     Logger logger = Logger.getLogger(BuildSettlementCommand.class.getName());
 
 
-    public BuildSettlementCommand (Node node, Player player, Board board) {
+    public BuildSettlementCommand (Node node, Player player) {
         this.node = node;
         this.player = player;
-        //this.board = board;
     }
 
     @Override

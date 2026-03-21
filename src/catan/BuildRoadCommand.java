@@ -6,15 +6,13 @@ public class BuildRoadCommand implements Command {
 
     private Edge edge;
     private Player player;
-    //private Board board;
     private Road road;
     Logger logger = Logger.getLogger(BuildRoadCommand.class.getName());
 
 
-    public BuildRoadCommand(Edge edge, Player player, Board board) {
+    public BuildRoadCommand(Edge edge, Player player) {
         this.edge = edge;
         this.player = player;
-        //this.board = board;
     }
 
     @Override
