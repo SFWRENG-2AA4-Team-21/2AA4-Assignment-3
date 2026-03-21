@@ -13,6 +13,7 @@ public class GameHistory {
         command.execute();
         undoStack.push(command);
         redoStack.clear();
+    }
 
     public void undo() {
         if(!undoStack.isEmpty()) {
