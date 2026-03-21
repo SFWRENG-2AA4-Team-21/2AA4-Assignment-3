@@ -171,7 +171,7 @@ public class Game implements Subject {
                     Node n = board.getNode(nodeId);
                     if (n != null && !n.hasBuilding()) {
                         // implementing command to building
-                        Command cmd = new BuildSettlementCommand(n, p, board);
+                        Command cmd = new BuildSettlementCommand(n, p);
                         history.executeCommand(cmd);
                         logger.log(Level.INFO,"{0} {1} built Settlement at Node {2}", new Object[]{PLAYER, currentPlayer, nodeId});
                         notifyObservers();
@@ -185,7 +185,7 @@ public class Game implements Subject {
 
                 if (n != null && !n.hasBuilding()) {
                     // implementing command to building
-                    Command cmd = new BuildSettlementCommand(n, p, board);
+                    Command cmd = new BuildSettlementCommand(n, p);
                     history.executeCommand(cmd);
                     logger.log(Level.INFO,"{0} {1} built Settlement at Node {2}",new Object[]{PLAYER, currentPlayer, nodeId});
                     notifyObservers();
@@ -216,7 +216,7 @@ public class Game implements Subject {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && !e.hasRoad()) {
                     // implementing command pattern to road
-                    Command cmd = new BuildRoadCommand(e, p, board);
+                    Command cmd = new BuildRoadCommand(e, p);
                     history.executeCommand(cmd);
                     notifyObservers();
                     placed = true;
@@ -297,7 +297,6 @@ public class Game implements Subject {
         // Score is 0.0.
         double passScore = 0.0;
         if (passScore > maxScore) {
-            maxScore = passScore;
             bestActions.clear();
             bestActions.add(2);
         } else if (passScore == maxScore) {
