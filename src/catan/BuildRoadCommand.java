@@ -6,7 +6,6 @@ public class BuildRoadCommand implements Command {
 
     private Edge edge;
     private Player player;
-    private Road road;
     Logger logger = Logger.getLogger(BuildRoadCommand.class.getName());
 
 
@@ -18,7 +17,7 @@ public class BuildRoadCommand implements Command {
     @Override
     public void execute() {
         if(!edge.hasRoad()) {
-            road = new Road(player, edge);
+            Road road = new Road(player, edge);
             edge.placeRoad(road);
             logger.info("Road built at Edge " + edge.getId());
         }
