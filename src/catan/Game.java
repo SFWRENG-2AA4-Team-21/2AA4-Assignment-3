@@ -63,15 +63,18 @@ public class Game implements Subject {
     }
 
     public void startGame() {
-        if (mode == 1) {
-            for (int i = 0; i < 4; i++) {
-                players.add(new Player(i));
-            }
-        } else if (mode == 2) {
-            players.add(new HumanPlayer(1));
-            for (int i = 2; i < 3; i++) {
-                players.add(new Player(i));
-            }
+        switch(mode){
+            case 1:
+                for (int i = 0; i < 4; i++) {
+                    players.add(new Player(i));
+                }
+                break;
+            case 2:
+                players.add(new HumanPlayer(1));
+                for (int i = 2; i < 3; i++) {
+                    players.add(new Player(i));
+                }
+                break;
         }
         board.addTile(1, new Tile(1, "WOOD", 6));
         board.addTile(2, new Tile(2, BRICK, 8));
