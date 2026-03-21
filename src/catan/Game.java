@@ -153,15 +153,14 @@ public class Game implements Subject {
             boolean paidWood = p.useResource("WOOD", 1);
             boolean paidBrick = p.useResource(BRICK, 1);
 
-            if (!paidWood || !paidBrick) {
-                // refund any partial payment
-                if (paidWood)
-                    p.addResources("WOOD", 1);
-                if (paidBrick)
-                    p.addResources(BRICK, 1);
-                logger.log(Level.INFO,"{0} {1} tried to build Settlement but lacked resources.", new Object[]{PLAYER, currentPlayer});
-                return;
-            }
+
+            // refund any partial payment
+            if (!paidBrick && paidWood)
+                p.addResources("WOOD", 1);
+            if (!paidWood && paidBrick)
+                p.addResources(BRICK, 1);
+            logger.log(Level.INFO,"{0} {1} tried to build Settlement but lacked resources.", new Object[]{PLAYER, currentPlayer});
+            return;
 
             // find first free node
             boolean placed = false;
