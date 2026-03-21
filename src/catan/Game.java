@@ -115,10 +115,7 @@ public class Game implements Subject {
         }
 
         logger.info("=== GAME OVER ===");
-        for (Player p : players) {
-            int i = p.getId();
-            logger.log(Level.INFO,"{0} {1} final score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
-        }
+        printPlayerScore(players);
 
     }
 
@@ -342,6 +339,13 @@ public class Game implements Subject {
             }
         }
         return false;
+    }
+
+    private void printPlayerScore(List<Player> players){
+        for (Player p : players) {
+            int i = p.getId();
+            logger.log(Level.INFO,"{0} {1} final score: {2}", new Object[]{PLAYER, i, players.get(i).getScore()});
+        }
     }
 
 }
